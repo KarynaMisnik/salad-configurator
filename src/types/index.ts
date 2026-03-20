@@ -24,3 +24,20 @@ shape: 'round' | 'square';
     diets: string[];
     weight_grams: number;
  }
+
+ export interface User{
+    user_id: number;
+    email: string;
+    name: string;
+    role: string;
+ }
+
+ export interface Recipe{
+    id: number;
+    userID: number;
+    name: string;
+    bowlId: number;
+    ingredientIds: number[];
+    slots?: Record<string, Ingredient | null>;
+    is_public: boolean;
+ }
