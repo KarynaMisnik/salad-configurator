@@ -1,11 +1,9 @@
-import React from "react";
-
-import "./App.css";
+import BaseSelection from "./components/BaseSelection";
 
 function App() {
   return (
     <>
-      <h1>Hello, I am empty and ready for development!</h1>
+      <BaseSelection />
     </>
   );
 }
