@@ -1,11 +1,5 @@
-import BaseSelection from "./components/BaseSelection";
-
 function App() {
-  return (
-    <>
-      <BaseSelection />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
