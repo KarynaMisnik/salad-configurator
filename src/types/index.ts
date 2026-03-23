@@ -41,3 +41,11 @@ shape: 'round' | 'square';
     slots?: Record<string, Ingredient | null>;
     is_public: boolean;
  }
+
+ export interface PriceListItem{
+    id: number;
+    item_id: number;
+    price: number;
+    type: string;
+ }
+
