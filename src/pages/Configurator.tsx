@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BowlSelection from "../components/BowlSelection";
 import CenterBowl from "../components/CenterBowl";
 import BaseSelection from "../components/BaseSelection";
 import IngredientSection from "../components/IngredientSection";
 import SummaryBar from "../components/SummaryBar";
 import type { Bowl, Category, Ingredient } from "../types";
+import { getBowls } from "../services/api.ts";
 
 function Configurator() {
   const [bowls, setBowls] = useState<Bowl[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
+  useEffect(() => {
+    getBowls().then((data) => {
+      setBowls(data);
+    });
+  }, []);
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
