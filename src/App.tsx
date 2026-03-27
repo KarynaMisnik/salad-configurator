@@ -9,20 +9,20 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <>
-    <div className="min-h-screen flex flex-col bg-white font-sans">
-      <Header />
+      <div className="min-h-screen flex flex-col bg-white font-sans">
+        <Header />
 
-      <main>
-        <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
-          <BowlSelection />
-          <CenterBowl />
-          <BaseSelection />
-          <IngredientSection />
-          <SummaryBar />
-        </div>
-      </main>
+        <main>
+          <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
+            <BowlSelection />
+            <CenterBowl />
+            <BaseSelection />
+            <IngredientSection />
+            <SummaryBar />
+          </div>
+        </main>
 
-      <Footer />
+        <Footer />
       </div>
     </>
   );
