@@ -8,8 +8,9 @@ import Print from "./pages/Print";
 function App() {
   return (
     <>
-    <div className="min-h-screen flex flex-col bg-white font-sans">
-      <Header />
+      <div className="min-h-screen flex flex-col bg-white font-sans">
+        <Header />
+
 
       <main>
         <Routes>
@@ -19,7 +20,7 @@ function App() {
         </Routes>
       </main>
 
-      <Footer />
+        <Footer />
       </div>
     </>
   );
