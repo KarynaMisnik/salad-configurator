@@ -4,7 +4,6 @@ import Footer from "./components/Footer";
 import Configurator from "./pages/Configurator";
 import Community from "./pages/Community";
 import Print from "./pages/Print";
-import IngredientCard from "./components/IngredientCard";
 
 function App() {
   return (

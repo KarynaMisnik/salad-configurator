@@ -1,6 +1,12 @@
-import React from "react";
+import type { Ingredient } from "../types";
 
-export default function BaseSelection() {
+interface BaseSelectionProps {
+  ingredients: Ingredient[];
+}
+
+export default function BaseSelection({ ingredients }: BaseSelectionProps) {
+  const bases = ingredients.filter((ingredient) => ingredient.categoryId === 6);
+
   return (
     <div
       className="bg-zinc-800 rounded-[3rem] p-6 text-white
@@ -13,24 +19,15 @@ export default function BaseSelection() {
         2
       </div>
       <div className="w-full space-y-4">
-        <div
-          className="border-b border-gray-600 pb-2
-        flex justify-end gap-4 items-center"
-        >
-          <span>Item 1</span>
-        </div>
-        <div
-          className="border-b border-gray-600 pb-2
-        flex justify-end gap-4 items-center"
-        >
-          <span>Item 2</span>
-        </div>
-        <div
-          className="border-b border-gray-600 pb-2
-        flex justify-end gap-4 items-center"
-        >
-          <span>Item 3</span>
-        </div>
+        {bases.map((base) => (
+          <div
+            key={base.id}
+            className="border-b border-gray-600 pb-2
+          flex justify-end gap-4 items-center"
+          >
+            <span>{base.name}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
