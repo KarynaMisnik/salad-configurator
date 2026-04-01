@@ -10,9 +10,11 @@ interface IngredientSectionProps {
 export default function IngredientSection({ categories, ingredients }: IngredientSectionProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
 
+  // Base category is shown in the dedicated base panel, so skip it here.
   const filteredCategories = categories.filter((c) => c.id !== 6);
   const filteredIngredients = ingredients.filter((i) => i.categoryId !== 6);
 
+  // Null means "all non-base ingredients"; otherwise apply category filter.
   const visibleIngredients =
     selectedCategoryId === null
       ? filteredIngredients
@@ -32,6 +34,7 @@ export default function IngredientSection({ categories, ingredients }: Ingredien
         {filteredCategories.map((category) => (
           <button
             key={category.id}
+            // Clicking active chip again resets back to "all".
             onClick={() =>
               setSelectedCategoryId(
                 selectedCategoryId === category.id ? null : category.id

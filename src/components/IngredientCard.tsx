@@ -1,11 +1,12 @@
 import type { Ingredient } from '../types';
-// ^^ required a type only import when erbatimModuleSyntax is enabled
+// Type-only import keeps runtime bundle clean with strict TS module settings.
 
 interface Props {
   ingredient: Ingredient;
 }
 
 export default function IngredientCard({ ingredient }: Props) {
+  // Badge color map keyed by diet code from API data.
   const dietColors: Record<string, string> = {
     G: 'bg-green-100 text-green-800',
     L: 'bg-amber-100 text-amber-800',
@@ -34,6 +35,7 @@ export default function IngredientCard({ ingredient }: Props) {
           {ingredient.diets.map((diet) => (
             <span
               key={diet}
+              // Unknown diet code falls back to neutral styling.
               className={`text-xs px-2 py-1 rounded-full font-medium ${
                 dietColors[diet] || 'bg-gray-100 text-gray-800'
               }`}

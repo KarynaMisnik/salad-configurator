@@ -5,6 +5,7 @@ import IngredientSection from "../components/IngredientSection";
 import SummaryBar from "../components/SummaryBar";
 import type { Category, Ingredient } from "../types";
 
+// Temporary local seed data until API integration is added.
 const categories: Category[] = [
   { id: 1, name: "Greens", base_type_id: 1 },
   { id: 2, name: "Proteins", base_type_id: 1 },
@@ -13,6 +14,7 @@ const categories: Category[] = [
   { id: 6, name: "Bases", base_type_id: 1 },
 ];
 
+// categoryId links each ingredient to one category chip.
 const ingredients: Ingredient[] = [
   {
     id: 101,

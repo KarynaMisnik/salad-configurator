@@ -1,4 +1,5 @@
 export interface BaseType {
+   // Shared fields used by bowls and ingredients.
     id: number;
     name: string;
     price: number;
@@ -20,6 +21,7 @@ shape: 'round' | 'square';
  }
 
  export interface Ingredient extends BaseType{
+    // camelCase here maps to category relation used in React components.
     categoryId: number;
     diets: string[];
     weight_grams: number;

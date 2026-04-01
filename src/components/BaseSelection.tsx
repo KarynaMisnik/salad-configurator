@@ -5,6 +5,7 @@ interface BaseSelectionProps {
 }
 
 export default function BaseSelection({ ingredients }: BaseSelectionProps) {
+  // Category 6 is reserved for base ingredients (e.g., rice/greens).
   const bases = ingredients.filter((ingredient) => ingredient.categoryId === 6);
 
   return (
