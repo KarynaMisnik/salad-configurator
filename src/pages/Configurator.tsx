@@ -33,12 +33,13 @@ function Configurator() {
     fetchData();
   }, []);
 
+function Configurator() {
   return (
     <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
       <BowlSelection bowls={bowls} />
       <CenterBowl />
-      <BaseSelection />
-      <IngredientSection />
+      <BaseSelection ingredients={ingredients} />
+      <IngredientSection categories={categories} ingredients={ingredients} />
       <SummaryBar />
     </div>
   );

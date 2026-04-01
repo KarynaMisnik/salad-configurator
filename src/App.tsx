@@ -14,6 +14,7 @@ function App() {
 
       <main>
         <Routes>
+          {/* Route switch for top-level pages in the app shell. */}
           <Route path="/" element={<Configurator />} />
           <Route path="/community" element={<Community />} />
           <Route path="/print" element={<Print />} />
