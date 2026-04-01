@@ -11,15 +11,14 @@ function App() {
       <div className="min-h-screen flex flex-col bg-white font-sans">
         <Header />
 
-
-      <main>
-        <Routes>
-          {/* Route switch for top-level pages in the app shell. */}
-          <Route path="/" element={<Configurator />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/print" element={<Print />} />
-        </Routes>
-      </main>
+        <main>
+          <Routes>
+            {/* Route switch for top-level pages in the app shell. */}
+            <Route path="/" element={<Configurator />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/print" element={<Print />} />
+          </Routes>
+        </main>
 
         <Footer />
       </div>
