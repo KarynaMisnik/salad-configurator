@@ -23,6 +23,7 @@ shape: 'round' | 'square';
  export interface Ingredient extends BaseType{
     // camelCase here maps to category relation used in React components.
     categoryId: number;
+    name: string;
     diets: string[];
     weight_grams: number;
  }

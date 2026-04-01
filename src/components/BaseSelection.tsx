@@ -1,4 +1,4 @@
-import type { Ingredient } from "../types";
+import type { Ingredient } from "../types/index";
 
 interface BaseSelectionProps {
   ingredients: Ingredient[];
@@ -26,7 +26,7 @@ export default function BaseSelection({ ingredients }: BaseSelectionProps) {
             className="border-b border-gray-600 pb-2
           flex justify-end gap-4 items-center"
           >
-            <span>{base.name}</span>
+            <span className="text-red-500">{base.name}</span>
           </div>
         ))}
       </div>
