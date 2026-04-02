@@ -17,7 +17,7 @@ export default function BaseSelection({ ingredients }: BaseSelectionProps) {
         className="w-10 h-10 rounded-full bg-gray-700 
         flex items-center justify-center mb-4"
       >
-        2
+        2.
       </div>
       <div className="w-full space-y-4">
         {bases.map((base) => (

@@ -1,8 +1,7 @@
 import { useIngredientStore } from "../store/useIngredientStore.ts";
 
-const setBaseType = useIngredientStore((state) => state.setBaseType);
-
 export default function CenterBowl() {
+  const setBaseType = useIngredientStore((state) => state.setBaseType);
   return (
     <div
       className="flex-1 flex flex-col 

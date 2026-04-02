@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.img {
+  @apply bg-cover object-fill w-full h-auto;
+}
