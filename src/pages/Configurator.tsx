@@ -34,13 +34,15 @@ function Configurator() {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
-      <BowlSelection bowls={bowls} />
-      <CenterBowl />
-      <BaseSelection ingredients={ingredients} />
+    <>
+      <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
+        <BowlSelection bowls={bowls} />
+        <CenterBowl />
+        <BaseSelection ingredients={ingredients} />
+      </div>
       <IngredientSection categories={categories} ingredients={ingredients} />
       <SummaryBar />
-    </div>
+    </>
   );
 }
 

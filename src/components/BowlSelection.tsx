@@ -15,7 +15,7 @@ export default function BowlSelection({ bowls }: Props) {
       <div className="w-full flex flex-col gap-3">
         {bowls.map((bowl) => (
           <div className="flex">
-            <img src="bowl.image_url"></img>
+            <img src={bowl.image_url}></img>
             <button
               key={bowl.id}
               className="h-12 border-2 border-gray-600 rounded-xl flex items-center px-4"
