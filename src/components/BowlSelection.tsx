@@ -1,8 +1,11 @@
 import type { Bowl } from "../types/index";
+import { useIngredientStore } from "../store/useIngredientStore.ts";
 
 type Props = {
   bowls: Bowl[];
 };
+
+const setBowl = useIngredientStore((state) => state.setBowl);
 
 export default function BowlSelection({ bowls }: Props) {
   return (
@@ -14,10 +17,10 @@ export default function BowlSelection({ bowls }: Props) {
 
       <div className="w-full flex flex-col gap-3">
         {bowls.map((bowl) => (
-          <div className="flex">
+          <div key={bowl.id} className="flex">
             <img src={bowl.image_url}></img>
             <button
-              key={bowl.id}
+              onClick={() => setBowl(bowl)}
               className="h-12 border-2 border-gray-600 rounded-xl flex items-center px-4"
             >
               {bowl.name}

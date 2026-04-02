@@ -1,3 +1,7 @@
+import { useIngredientStore } from "../store/useIngredientStore.ts";
+
+const setBaseType = useIngredientStore((state) => state.setBaseType);
+
 export default function CenterBowl() {
   return (
     <div
@@ -5,8 +9,8 @@ export default function CenterBowl() {
       items-center justify-center min-h-[400px] mt-4 lg:mt-0"
     >
       <div className="flex gap-3 mb-6 items-center">
-        <span>Ingredient 1</span>
-        <span>Ingredient 2</span>
+        <button onClick={() => setBaseType(1)}>Salaatti</button>
+        <button onClick={() => setBaseType(2)}>Rahka</button>
       </div>
       <div
         className="w-80 h-80 rounded-full border-[12px] border-gray-200

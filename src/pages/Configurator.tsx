@@ -6,12 +6,23 @@ import IngredientSection from "../components/IngredientSection";
 import SummaryBar from "../components/SummaryBar";
 import type { Bowl, Category, Ingredient } from "../types";
 import { getBowls, getCategories, getIngredients } from "../services/api.ts";
+import { useIngredientStore } from "../store/useIngredientStore.ts";
 
 function Configurator() {
   const [bowls, setBowls] = useState<Bowl[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  //get baseType from IngredientStore
+  const baseType = useIngredientStore((state) => state.baseType);
+
+  //filter bowls
+
+  const filteredBowls = bowls.filter((bowl) => bowl.base_type_id === baseType);
+
+  const filteredCategories = categories.filter(
+    (category) => category.base_type_id === baseType,
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,11 +47,14 @@ function Configurator() {
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
-        <BowlSelection bowls={bowls} />
+        <BowlSelection bowls={filteredBowls} />
         <CenterBowl />
         <BaseSelection ingredients={ingredients} />
       </div>
-      <IngredientSection categories={categories} ingredients={ingredients} />
+      <IngredientSection
+        categories={filteredCategories}
+        ingredients={ingredients}
+      />
       <SummaryBar />
     </>
   );
