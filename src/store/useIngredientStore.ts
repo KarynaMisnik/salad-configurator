@@ -63,5 +63,20 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
     // 4. If no empty slot found → do nothing
     return state;
   }),
-  removeIngredient: () => {},
+  removeIngredient: (id) =>
+  set((state) => {
+    const newSlots = { ...state.slots };
+
+    // Find the first slot with matching id
+    const keyToRemove = Object.keys(newSlots).find(
+      (key) => newSlots[key]?.id === id
+    );
+
+    // If found, set it to null
+    if (keyToRemove) {
+      newSlots[keyToRemove] = null;
+    }
+
+    return { slots: newSlots };
+  }),
 }));
