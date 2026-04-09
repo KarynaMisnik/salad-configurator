@@ -19,6 +19,7 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
   baseType: 1,
   selectedBowl: null,
 
+
   setBaseType: (id) => set({ baseType: id }),
 
   setBowl: (bowl) => set({ selectedBowl: bowl }),
@@ -30,7 +31,37 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
       selectedBowl: null,
     }),
 
-  // placeholders (not implemented yet)
-  addIngredient: () => {},
+  
+ addIngredient: (item) =>
+  set((state) => {
+    // 1. If base ingredient (categoryId === 6)
+    if (item.categoryId === 6) {
+      return {
+        slots: { ...state.slots, base: item },
+      };
+    }
+
+    // 2. Check if bowl is selected
+    const slotCount = state.selectedBowl?.slot_count;
+
+    if (!slotCount) return state;
+
+    // 3. Find first empty slot
+    for (let i = 1; i <= slotCount; i++) {
+      const key = `slot-${i}`;
+
+      if (!state.slots[key]) {
+        return {
+          slots: {
+            ...state.slots,
+            [key]: item,
+          },
+        };
+      }
+    }
+
+    // 4. If no empty slot found → do nothing
+    return state;
+  }),
   removeIngredient: () => {},
 }));
