@@ -1,4 +1,5 @@
 import type { Ingredient } from '../types';
+import { useIngredientStore } from '../store/useIngredientStore';
 // Type-only import keeps runtime bundle clean with strict TS module settings.
 
 interface Props {
@@ -6,6 +7,11 @@ interface Props {
 }
 
 export default function IngredientCard({ ingredient }: Props) {
+  const addIngredient = useIngredientStore(
+    (state: ReturnType<typeof useIngredientStore.getState>) =>
+      state.addIngredient
+  );
+
   // Badge color map keyed by diet code from API data.
   const dietColors: Record<string, string> = {
     G: 'bg-green-100 text-green-800',
@@ -15,7 +21,11 @@ export default function IngredientCard({ ingredient }: Props) {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="w-40 h-40 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden flex flex-col p-4">
+      <button
+        type="button"
+        onClick={() => addIngredient(ingredient)}
+        className="w-40 h-40 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden flex flex-col p-4 text-left"
+      >
         {/* Image */}
         <div className="w-full h-24 bg-gray-200 rounded mb-3 flex items-center justify-center overflow-hidden">
           <img
@@ -44,7 +54,7 @@ export default function IngredientCard({ ingredient }: Props) {
             </span>
           ))}
         </div>
-      </div>
+      </button>
     </div>
   );
 }
