@@ -12,7 +12,6 @@ function Configurator() {
   const [bowls, setBowls] = useState<Bowl[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   //get baseType from IngredientStore
   const baseType = useIngredientStore((state) => state.baseType);
 
@@ -37,8 +36,6 @@ function Configurator() {
         setIngredients(ingredients);
       } catch (error) {
         console.error("Error fetching data: ", error);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchData();
