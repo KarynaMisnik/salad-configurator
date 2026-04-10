@@ -9,6 +9,8 @@ interface IngredientSectionProps {
 
 export default function IngredientSection({ categories, ingredients }: IngredientSectionProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedSearchQuery = searchQuery.toLowerCase();
 
   // Base category is shown in the dedicated base panel, so skip it here.
   const filteredCategories = categories.filter((c) => c.id !== 6);
@@ -16,7 +18,8 @@ export default function IngredientSection({ categories, ingredients }: Ingredien
     (ingredient) =>
       ingredient.categoryId !== 6 &&
       (activeCategory === "all" ||
-        ingredient.categoryId === Number(activeCategory))
+        ingredient.categoryId === Number(activeCategory)) &&
+      ingredient.name.toLowerCase().includes(normalizedSearchQuery)
   );
 
   return (
@@ -25,6 +28,8 @@ export default function IngredientSection({ categories, ingredients }: Ingredien
         <input
           type="text"
           placeholder="Search ingredients..."
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
           className="rounded-full px-6 py-3 text-white outline-none w-64 border-2 border-transparent focus:border-[#A2D135]"
         />
       </div>
