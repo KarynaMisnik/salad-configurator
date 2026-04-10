@@ -8,17 +8,16 @@ interface IngredientSectionProps {
 }
 
 export default function IngredientSection({ categories, ingredients }: IngredientSectionProps) {
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
   // Base category is shown in the dedicated base panel, so skip it here.
   const filteredCategories = categories.filter((c) => c.id !== 6);
-  const filteredIngredients = ingredients.filter((i) => i.categoryId !== 6);
-
-  // Null means "all non-base ingredients"; otherwise apply category filter.
-  const visibleIngredients =
-    selectedCategoryId === null
-      ? filteredIngredients
-      : filteredIngredients.filter((i) => i.categoryId === selectedCategoryId);
+  const filteredIngredients = ingredients.filter(
+    (ingredient) =>
+      ingredient.categoryId !== 6 &&
+      (activeCategory === "all" ||
+        ingredient.categoryId === Number(activeCategory))
+  );
 
   return (
     <section className="bg-zinc-800 rounded-[3rem] p-8 text-white w-full shadow-lg">
@@ -34,14 +33,9 @@ export default function IngredientSection({ categories, ingredients }: Ingredien
         {filteredCategories.map((category) => (
           <button
             key={category.id}
-            // Clicking active chip again resets back to "all".
-            onClick={() =>
-              setSelectedCategoryId(
-                selectedCategoryId === category.id ? null : category.id
-              )
-            }
+            onClick={() => setActiveCategory(String(category.id))}
             className={`font-bold px-6 py-2 rounded-full ${
-              selectedCategoryId === category.id
+              activeCategory === String(category.id)
                 ? "bg-white text-black"
                 : "bg-[#A2D135] text-black"
             }`}
@@ -52,7 +46,7 @@ export default function IngredientSection({ categories, ingredients }: Ingredien
       </div>
 
       <div className="flex flex-wrap gap-4">
-        {visibleIngredients.map((ingredient) => (
+        {filteredIngredients.map((ingredient) => (
           <IngredientCard key={ingredient.id} ingredient={ingredient} />
         ))}
       </div>
