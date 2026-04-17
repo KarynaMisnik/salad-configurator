@@ -7,7 +7,10 @@ interface IngredientSectionProps {
   ingredients: Ingredient[];
 }
 
-export default function IngredientSection({ categories, ingredients }: IngredientSectionProps) {
+export default function IngredientSection({
+  categories,
+  ingredients,
+}: IngredientSectionProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const normalizedSearchQuery = searchQuery.toLowerCase();
@@ -19,18 +22,18 @@ export default function IngredientSection({ categories, ingredients }: Ingredien
       ingredient.categoryId !== 6 &&
       (activeCategory === "all" ||
         ingredient.categoryId === Number(activeCategory)) &&
-      ingredient.name.toLowerCase().includes(normalizedSearchQuery)
+      ingredient.name.toLowerCase().includes(normalizedSearchQuery),
   );
 
   return (
-    <section className="bg-zinc-800 rounded-[3rem] p-8 text-white w-full shadow-lg">
+    <section className="bg-zinc-800 rounded-[3rem] m-4 p-8 text-white w-full shadow-lg ">
       <div className="mb-6">
         <input
           type="text"
           placeholder="Search ingredients..."
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
-          className="rounded-full px-6 py-3 text-white outline-none w-64 border-2 border-transparent focus:border-[#A2D135]"
+          className="rounded-full px-6 py-3 text-white outline-none w-64 border-2 border-white focus:border-[#A2D135]"
         />
       </div>
 

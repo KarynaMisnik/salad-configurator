@@ -3,13 +3,15 @@ import { useIngredientStore } from "../store/useIngredientStore";
 
 export default function SummaryBar() {
   const slots = useIngredientStore((state) => state.slots);
-  const removeIngredient = useIngredientStore((state) => state.removeIngredient);
+  const removeIngredient = useIngredientStore(
+    (state) => state.removeIngredient,
+  );
   const activeIngredients = Object.values(slots).filter(
-    (item): item is NonNullable<typeof item> => item !== null
+    (item): item is NonNullable<typeof item> => item !== null,
   );
 
   return (
-    <section className="bg-zinc-800 rounded-[3rem] p-8 text-white w-full flex flex-col md:flex-row gap-8 shadow-xl">
+    <section className="bg-zinc-800 rounded-[3rem] p-8 ml-4 mr-4 text-white w-full flex flex-col md:flex-row gap-8 shadow-xl">
       <div className="flex-1 bg-[#3a3a3a] rounded-3xl p-6 min-h-[150px] shadow-inner">
         <h3 className="text-xl text-white font-bold mb-4">
           Selected ingredients ({activeIngredients.length})

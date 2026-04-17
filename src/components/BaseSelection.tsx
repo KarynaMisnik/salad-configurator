@@ -10,7 +10,7 @@ export default function BaseSelection({ ingredients }: BaseSelectionProps) {
 
   return (
     <div
-      className="bg-zinc-800 rounded-[3rem] p-6 text-white
+      className="bg-zinc-800 rounded-[3rem] m-4 p-6 text-white
      w-full lg:w-1/4 flex flex-col items-center shadow-lg"
     >
       <div
