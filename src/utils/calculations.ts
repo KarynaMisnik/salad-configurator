@@ -1,10 +1,8 @@
-export type Ingredient = {
-  id: number;
-  weight: number;
-};
+import type { Ingredient } from "../types";
 
-export function calculateTotal(ingredients: Ingredient[]): number {
-  return ingredients.reduce((sum: number, item: Ingredient) => {
-    return sum + item.weight;
-  }, 0);
+export function calculateTotalWeight(ingredients: Ingredient[]): number {
+  return ingredients.reduce(
+    (sum, item) => sum + item.weight_grams,
+    0
+  );
 }
