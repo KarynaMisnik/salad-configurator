@@ -12,6 +12,11 @@ export default function SummaryBar() {
     (i): i is Ingredient => i !== null,
   );
 
+  const totalWeight = activeIngredients.reduce(
+    (sum, item) => sum + item.weight_grams,
+    0,
+  );
+
   return (
     <section className="bg-zinc-800 rounded-[3rem] p-8 ml-4 mr-4 text-white w-full flex flex-col md:flex-row gap-8 shadow-xl">
       Summry Bar
@@ -40,7 +45,7 @@ export default function SummaryBar() {
       </div>
       <aside className="flex-1 flex flex-col justify-center items-center gap-6">
         <div className="bg-white text-black font-black text-2xl py-3 w-32 rounded-full mb-2 shadow-md text-center">
-          430g
+          {totalWeight} g
         </div>
         <div className="bg-white text-black font-black text-2xl py-3 w-32 rounded-full mb-2 shadow-md text-center">
           $10.99
