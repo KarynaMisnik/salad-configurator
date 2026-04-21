@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import logo from "../assets/fresse-logo.png";
+import { useAuthStore } from "../store/useAuthStore";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const userName = useAuthStore((s) => s.userName);
+  const logout = useAuthStore((s) => s.logout);
+  const login = useAuthStore((s) => s.login);
 
   return (
     <header className="bg-zinc-800 text-white w-full h-32 flex justify-between items-start px-8 pt-4">
@@ -17,6 +21,17 @@ export function Header() {
           className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-30 lg:h-30 object-contain"
         />
       </Link>
+
+      {userName ? (
+        <div className="flex items-center gap-4">
+          <span>Hello, {userName}</span>
+          <button onClick={logout} className="bg-red-500 px-3 py-1 rounded">
+            Logout
+          </button>
+        </div>
+      ) : (
+        <button onClick={() => login("123", "TestUser")}>Login</button>
+      )}
 
       <h1 className="text-3xl font-black tracking-widest mt-6">BOWL-LASKURI</h1>
 
