@@ -1,28 +1,53 @@
 import { useState } from "react";
-import Modal from "../components/Modal";
+import Modal from "./Modal";
+import { saveRecipe } from "../services/api";
+import { useAuthStore } from "../store/useAuthStore";
+import { useIngredientStore } from "../store/useIngredientStore";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: { name: string; isPublic: boolean }) => void;
+  bowlId: string;
 };
 
-export default function SaveRecipeModal({ isOpen, onClose, onSave }: Props) {
+export default function SaveRecipeModal({ isOpen, onClose, bowlId }: Props) {
   const [name, setName] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const token = useAuthStore((s) => s.token);
+  const slots = useIngredientStore((s) => s.slots);
+  const clearSelection = useIngredientStore((s) => s.clearSelection);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    onSave({
-      name,
-      isPublic,
-    });
+    if (!token) return;
 
-    // reset + close
-    setName("");
-    setIsPublic(false);
-    onClose();
+    const ingredientIds = Object.values(slots)
+      .filter((i) => i !== null)
+      .map((i: any) => i.id);
+
+    try {
+      await saveRecipe(token, {
+        name,
+        bowlId,
+        ingredientIds,
+      });
+
+      // ✅ success feedback
+      setMessage("Recipe saved!");
+
+      // ✅ clear bowl
+      clearSelection();
+
+      // optional: close modal after delay
+      setTimeout(() => {
+        setMessage("");
+        onClose();
+      }, 1000);
+    } catch (err) {
+      setMessage("Failed to save recipe");
+    }
   };
 
   if (!isOpen) return null;
@@ -32,43 +57,19 @@ export default function SaveRecipeModal({ isOpen, onClose, onSave }: Props) {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <h2 className="text-xl font-bold">Save Recipe</h2>
 
-        {/* Recipe Name */}
         <input
-          type="text"
-          placeholder="Recipe name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          placeholder="Recipe name"
           className="border p-2 rounded"
           required
         />
 
-        {/* Make Public */}
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isPublic}
-            onChange={(e) => setIsPublic(e.target.checked)}
-          />
-          Make Public
-        </label>
+        {message && <p className="text-green-600 font-bold">{message}</p>}
 
-        {/* Actions */}
-        <div className="flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-300 rounded"
-          >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            className="px-4 py-2 bg-green-600 text-white rounded"
-          >
-            Save
-          </button>
-        </div>
+        <button type="submit" className="bg-green-600 text-white p-2 rounded">
+          Save
+        </button>
       </form>
     </Modal>
   );

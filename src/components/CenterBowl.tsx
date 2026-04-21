@@ -1,10 +1,13 @@
 import { useIngredientStore } from "../store/useIngredientStore.ts";
+import SaveRecipeModal from "../components/SaveRecipeModal";
+import { useState } from "react";
 
 export default function CenterBowl() {
   const setBaseType = useIngredientStore((state) => state.setBaseType);
   const slots = useIngredientStore((state) => state.slots);
   const activeIngredients = Object.values(slots).filter((i) => i !== null);
   const selectedBowl = useIngredientStore((state) => state.selectedBowl);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div
@@ -14,6 +17,18 @@ export default function CenterBowl() {
       <div className="flex gap-3 mb-6 items-center">
         <button onClick={() => setBaseType(1)}>Salaatti</button>
         <button onClick={() => setBaseType(2)}>Rahka</button>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-green-600 text-white px-4 py-2 rounded"
+        >
+          Save Recipe
+        </button>
+
+        <SaveRecipeModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          bowlId="bowl-1"
+        />
       </div>
       <div
         className="w-80 h-80 rounded-full border-[12px] border-gray-200
