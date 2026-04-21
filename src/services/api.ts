@@ -20,3 +20,27 @@ export async function getIngredients(){
     return data;
 }
 
+export const saveRecipe = async (
+  token: string,
+  recipeData: {
+    name: string;
+    bowlId: string;
+    ingredientIds: string[];
+  },
+) => {
+  const response = await fetch("https://fresse-api.onrender.com/api/recipes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(recipeData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save recipe");
+  }
+
+  return await response.json();
+};
+
