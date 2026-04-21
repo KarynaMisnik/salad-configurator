@@ -1,5 +1,6 @@
 import { useIngredientStore } from "../store/useIngredientStore.ts";
 import SaveRecipeModal from "../components/SaveRecipeModal";
+
 import { useState } from "react";
 
 export default function CenterBowl() {

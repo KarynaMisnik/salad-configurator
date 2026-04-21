@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../components/Modal";
 import { saveRecipe } from "../services/api";
 import { useAuthStore } from "../store/useAuthStore";
 import { useIngredientStore } from "../store/useIngredientStore";
