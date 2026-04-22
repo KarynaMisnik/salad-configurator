@@ -44,3 +44,22 @@ export const saveRecipe = async (
   return await response.json();
 };
 
+//LOGIN LOGIC
+export const login = async (email: string, password: string) => {
+  const response = await fetch("https://fresse-api.onrender.com/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Login failed");
+  }
+
+  return await response.json();
+};
