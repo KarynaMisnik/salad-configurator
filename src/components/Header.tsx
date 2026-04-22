@@ -3,6 +3,14 @@ import { useState } from "react";
 import logo from "../assets/fresse-logo.png";
 import { useAuthStore } from "../store/useAuthStore";
 
+// Heroicons icons library
+import {
+  Bars3Icon,
+  UserIcon,
+  BookmarkIcon,
+  PrinterIcon,
+} from "@heroicons/react/24/solid";
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const userName = useAuthStore((s) => s.userName);
@@ -22,24 +30,13 @@ export function Header() {
         />
       </Link>
 
-      {userName ? (
-        <div className="flex items-center gap-4">
-          <span>Hello, {userName}</span>
-          <button onClick={logout} className="bg-red-500 px-3 py-1 rounded">
-            Logout
-          </button>
-        </div>
-      ) : (
-        <button onClick={() => login("123", "TestUser")}>Login</button>
-      )}
-
       <h1 className="text-3xl font-black tracking-widest mt-6">BOWL-LASKURI</h1>
 
       <button
         onClick={() => setIsMenuOpen((prev) => !prev)}
         className="text-3xl font-bold"
       >
-        ☰
+        <Bars3Icon className="w-6 h-6" />
       </button>
 
       {isMenuOpen && (
@@ -54,20 +51,37 @@ export function Header() {
         >
           <Link
             to="/"
-            className="font-semibold hover:text-zinc-700 transition-colors"
+            className="font-semibold hover:text-zinc-700 transition-colors flex"
           >
-            Home
+            <UserIcon className="w-6 h-6 mr-2" />
+            {userName ? (
+              <div className="flex items-center gap-4">
+                <span>Hello, {userName}</span>
+                <button
+                  onClick={logout}
+                  className="bg-red-500 px-3 py-1 rounded"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button onClick={() => login("123", "TestUser")}>
+                Kirjaudu sisään
+              </button>
+            )}
           </Link>
           <Link
             to="/community"
-            className="font-semibold hover:text-zinc-700 transition-colors"
+            className="font-semibold hover:text-zinc-700 transition-colors flex"
           >
+            <BookmarkIcon className="w-6 h-6 mr-2" />
             Saved recipes
           </Link>
           <Link
             to="/print"
-            className="font-semibold hover:text-zinc-700 transition-colors"
+            className="font-semibold hover:text-zinc-700 transition-colors flex"
           >
+            <PrinterIcon className="w-6 h-6 mr-2" />
             Print
           </Link>
         </div>
