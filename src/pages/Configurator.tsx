@@ -21,6 +21,8 @@ function Configurator() {
     (category) => category.base_type_id === baseType,
   );
 
+  const baseIngredients = ingredients.filter((i) => i.categoryId === 6);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,7 +41,7 @@ function Configurator() {
       <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
         <BowlSelection bowls={filteredBowls} />
         <CenterBowl />
-        <BaseSelection ingredients={ingredients} />
+        <BaseSelection ingredients={baseIngredients} />
       </div>
 
       {/* 👉 PASS FILTER CONTROL + FILTERED DATA */}
