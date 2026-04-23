@@ -12,10 +12,8 @@ function Configurator() {
   const [bowls, setBowls] = useState<Bowl[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  //get baseType from IngredientStore
-  const baseType = useIngredientStore((state) => state.baseType);
 
-  //filter bowls
+  const baseType = useIngredientStore((state) => state.baseType);
 
   const filteredBowls = bowls.filter((bowl) => bowl.base_type_id === baseType);
 
@@ -26,14 +24,9 @@ function Configurator() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bowls = await getBowls();
-        setBowls(bowls);
-
-        const categories = await getCategories();
-        setCategories(categories);
-
-        const ingredients = await getIngredients();
-        setIngredients(ingredients);
+        setBowls(await getBowls());
+        setCategories(await getCategories());
+        setIngredients(await getIngredients());
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -48,10 +41,13 @@ function Configurator() {
         <CenterBowl />
         <BaseSelection ingredients={ingredients} />
       </div>
+
+      {/* 👉 PASS FILTER CONTROL + FILTERED DATA */}
       <IngredientSection
         categories={filteredCategories}
         ingredients={ingredients}
       />
+
       <SummaryBar />
     </>
   );
