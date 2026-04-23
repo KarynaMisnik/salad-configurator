@@ -23,6 +23,15 @@ export async function getIngredients() {
   const data = await response.json();
   return data;
 }
+
+export async function getBaseIngredients(){
+   const response = await fetch(
+    "https://fresse-api.onrender.com/api/baseingredients",
+  );
+ 
+  const data = await response.json();
+  return data;
+}
   
 
 export const saveRecipe = async (
