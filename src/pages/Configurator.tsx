@@ -12,43 +12,38 @@ function Configurator() {
   const [bowls, setBowls] = useState<Bowl[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-
   const baseType = useIngredientStore((state) => state.baseType);
-
-  const filteredBowls = bowls.filter((bowl) => bowl.base_type_id === baseType);
-
-  const filteredCategories = categories.filter(
-    (category) => category.base_type_id === baseType,
-  );
-
-  const baseIngredients = ingredients.filter((i) => i.categoryId === 6);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setBowls(await getBowls());
-        setCategories(await getCategories());
-        setIngredients(await getIngredients());
+        console.log("baseType BEFORE FETCH:", baseType);
+        const [b, c, i] = await Promise.all([
+          getBowls(baseType),
+          getCategories(baseType),
+          getIngredients(baseType),
+        ]);
+
+        setBowls(b);
+        setCategories(c);
+        setIngredients(i);
       } catch (error) {
-        console.error("Error fetching data: ", error);
+        console.log("FETCHING with baseType:", baseType);
       }
     };
+
     fetchData();
-  }, []);
+  }, [baseType]);
 
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch">
-        <BowlSelection bowls={filteredBowls} />
+        <BowlSelection bowls={bowls} />
         <CenterBowl />
-        <BaseSelection ingredients={baseIngredients} />
+        <BaseSelection ingredients={ingredients} />
       </div>
 
-      {/* 👉 PASS FILTER CONTROL + FILTERED DATA */}
-      <IngredientSection
-        categories={filteredCategories}
-        ingredients={ingredients}
-      />
+      <IngredientSection categories={categories} ingredients={ingredients} />
 
       <SummaryBar />
     </>
