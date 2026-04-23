@@ -1,7 +1,6 @@
 export default function Footer() {
   return (
     <footer className="bg-[#A2D135] text-black p-8 mt-12 w-full flex flex-wrap justify-around items-start">
-      
       <div className="w-full sm:w-1/3 p-4">
         <p>Fresh Food Factory</p>
         <p>FRESSE</p>
@@ -19,7 +18,6 @@ export default function Footer() {
         <p>Facebook</p>
         <p>Twitter</p>
       </div>
-
     </footer>
   );
 }

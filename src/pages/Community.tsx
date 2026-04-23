@@ -1,7 +1,5 @@
 function Community() {
-  return (
-    <p>Coming Soon...</p>
-  );
+  return <p>Coming Soon...</p>;
 }
 
 export default Community;
