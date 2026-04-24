@@ -26,7 +26,6 @@ export interface Ingredient extends BaseType {
   name: string;
   diets: string[];
   weight_grams: number;
-  
 }
 
 export interface User {

@@ -5,30 +5,38 @@ import BaseSelection from "../components/BaseSelection";
 import IngredientSection from "../components/IngredientSection";
 import SummaryBar from "../components/SummaryBar";
 import type { Bowl, Category, Ingredient } from "../types";
-import { getBowls, getCategories, getIngredients } from "../services/api.ts";
-import { useIngredientStore } from "../store/useIngredientStore.ts";
+import { getBowls, getCategories, getIngredients } from "../services/api";
+import { useIngredientStore } from "../store/useIngredientStore";
 
 function Configurator() {
   const [bowls, setBowls] = useState<Bowl[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
   const baseType = useIngredientStore((state) => state.baseType);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("baseType BEFORE FETCH:", baseType);
-        const [b, c, i] = await Promise.all([
-          getBowls(baseType),
-          getCategories(baseType),
-          getIngredients(baseType),
-        ]);
+        const [b, c, i]: [Bowl[], Category[], Ingredient[]] = await Promise.all(
+          [getBowls(baseType), getCategories(), getIngredients()],
+        );
+
+        const filteredCategories = c.filter(
+          (cat) => cat.base_type_id === baseType,
+        );
+
+        const allowedCategoryIds = filteredCategories.map((cat) => cat.id);
+
+        const filteredIngredients = i.filter((ing) =>
+          allowedCategoryIds.includes(ing.categoryId),
+        );
 
         setBowls(b);
-        setCategories(c);
-        setIngredients(i);
+        setCategories(filteredCategories);
+        setIngredients(filteredIngredients);
       } catch (error) {
-        console.log("FETCHING with baseType:", baseType);
+        console.error(error);
       }
     };
 
