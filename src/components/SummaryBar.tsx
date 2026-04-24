@@ -13,7 +13,11 @@ export default function SummaryBar() {
     (i): i is Ingredient => i !== null,
   );
 
+
   const totalWeight = calculateTotalWeight(activeIngredients);
+  const totalPrice = activeIngredients.reduce((sum, item) => sum + (item.price || 0), 0);
+  const taxRate = 0.14; // Finland's food VAT
+  const taxAmount = totalPrice * taxRate;
 
   return (
     <section className="bg-zinc-800 rounded-[3rem] p-8 ml-4 mr-4 text-white w-full flex flex-col md:flex-row gap-8 shadow-xl">
@@ -45,8 +49,9 @@ export default function SummaryBar() {
         <div className="bg-white text-black font-black text-2xl py-3 w-32 rounded-full mb-2 shadow-md text-center">
           {totalWeight} g
         </div>
-        <div className="bg-white text-black font-black text-2xl py-3 w-32 rounded-full mb-2 shadow-md text-center">
-          $10.99
+        <div className="bg-white text-black font-black text-2xl py-3 w-32 rounded-full mb-2 shadow-md text-center flex flex-col items-center">
+          ${totalPrice.toFixed(2)}
+          <span className="text-xs font-normal text-gray-600 mt-1">*sis. alv {taxAmount.toFixed(2)} €</span>
         </div>
       </aside>
       <Link to="/print">Print</Link>
