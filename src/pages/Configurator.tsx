@@ -49,9 +49,12 @@ function Configurator() {
         setIngredients(filteredIngredients);
 
         // IMPORTANT FIX:
-        setBaseIngredients(
-          bi.filter((b: BaseIngredient) => b.categoryId === 6),
-        );
+        const filteredBases =
+          baseType === 1
+            ? bi.filter((b: BaseIngredient) => b.categoryId === 6)
+            : [];
+
+        setBaseIngredients(filteredBases);
       } catch (error) {
         console.error(error);
       }
