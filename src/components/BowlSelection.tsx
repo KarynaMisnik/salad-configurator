@@ -8,7 +8,7 @@ type Props = {
 export default function BowlSelection({ bowls }: Props) {
   const setBowl = useIngredientStore((state) => state.setBowl);
   return (
-    <aside className="bg-zinc-800 rounded-[3rem] p-6 text-white w-full lg:w-1/4 m-4 flex flex-col items-center shadow-lg">
+    <aside className="bg-zinc-800 rounded-[3rem] p-6 text-white  lg:w-1/4 m-4 flex flex-col items-center shadow-lg">
       <div className="bg-white text-black font-bold rounded-full w-8 h-8 flex items-center justify-center mb-4 shrink-0">
         1.
       </div>
@@ -17,10 +17,13 @@ export default function BowlSelection({ bowls }: Props) {
       <div className="w-full flex flex-col gap-3">
         {bowls.map((bowl) => (
           <div key={bowl.id} className="flex justify-center items-center">
-            <img className="img" src={bowl.image_url}></img>
+            <img
+              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain"
+              src={bowl.image_url}
+            ></img>
             <button
               onClick={() => setBowl(bowl)}
-              className="h-12 border-2 border-gray-600 rounded-xl flex items-center m-2 px-4"
+              className="h-12 rounded-xl flex items-center m-2 px-4"
             >
               {bowl.name}
             </button>

@@ -59,17 +59,6 @@ export default function IngredientSection({
 
         {/* CATEGORY BUTTONS */}
         <div className="flex flex-wrap gap-3 mb-6">
-          <button
-            onClick={() => setActiveCategory(null)}
-            className={`px-6 py-2 rounded-full font-bold ${
-              activeCategory === null
-                ? "bg-white text-black"
-                : "bg-gray-500 text-white"
-            }`}
-          >
-            Kaikki
-          </button>
-
           {categories.map((category) => (
             <button
               key={category.id}
@@ -98,12 +87,14 @@ export default function IngredientSection({
       </div>
 
       {/* DIET BUTTONS */}
-      <div className="flex flex-wrap gap-3 mt-6 justify-center">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-6 items-start sm:items-center justify-start sm:justify-center">
         {diets.map((diet) => (
-          <button className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium">
+          <button
+            key={diet.code}
+            className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium"
+          >
             {/* CIRCLE */}
-            <span className="w-7 h-7 bg-[#A2D135] text-black flex items-center justify-center rounded-full text-xs font-bold ">
-              {/* STYLE ONACTIVE ???*/}
+            <span className="w-7 h-7 bg-[#A2D135] text-black flex items-center justify-center rounded-full text-xs font-bold">
               {diet.code}
             </span>
 

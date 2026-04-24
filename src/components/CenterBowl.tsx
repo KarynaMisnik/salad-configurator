@@ -39,7 +39,19 @@ export default function CenterBowl() {
       </div>
 
       {/* BOWL */}
-      <div className="relative w-80 h-80 rounded-full border-[12px] border-gray-200 bg-gray-50 shadow-inner overflow-hidden">
+      <div className="relative w-80 h-80  overflow-hidden flex items-center justify-center">
+        {/* 1. BOWL IMAGE (main layer) */}
+        {selectedBowl ? (
+          <img
+            src={selectedBowl.image_url}
+            alt={selectedBowl.name}
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          />
+        ) : (
+          <span className="text-gray-400 z-10">Valitse rasia</span>
+        )}
+
+        {/* 2. BASE */}
         {base && (
           <img
             src={base.image_url}
@@ -48,7 +60,8 @@ export default function CenterBowl() {
           />
         )}
 
-        {dividerImage && (
+        {/* 3. DIVIDER */}
+        {selectedBowl && dividerImage && (
           <img
             src={dividerImage}
             alt="divider"
@@ -56,10 +69,9 @@ export default function CenterBowl() {
           />
         )}
 
+        {/* 4. INGREDIENTS */}
         <div className="relative z-30 flex flex-wrap items-center justify-center gap-2 p-4 h-full">
-          {activeIngredients.length === 0 ? (
-            <span className="text-gray-400">Bowl</span>
-          ) : (
+          {activeIngredients.length > 0 &&
             activeIngredients.map((ingredient) => {
               if (!ingredient) return null;
 
@@ -71,8 +83,7 @@ export default function CenterBowl() {
                   {ingredient.name}
                 </span>
               );
-            })
-          )}
+            })}
         </div>
       </div>
 
