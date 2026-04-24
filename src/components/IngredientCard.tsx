@@ -1,6 +1,5 @@
 import type { Ingredient } from "../types";
 import { useIngredientStore } from "../store/useIngredientStore";
-// Type-only import keeps runtime bundle clean with strict TS module settings.
 
 interface Props {
   ingredient: Ingredient;
@@ -13,12 +12,24 @@ export default function IngredientCard({ ingredient }: Props) {
   );
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex justify-center">
       <button
         type="button"
         onClick={() => addIngredient(ingredient)}
-        className="w-60 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center gap-3"
+        className="relative w-60 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center gap-3 p-2"
       >
+        {/* 🟢 DIET TAGS (TOP RIGHT) */}
+        <div className="absolute top-1 right-1 flex gap-1">
+          {ingredient.diets.map((diet) => (
+            <span
+              key={diet}
+              className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#A2D135] text-black font-bold"
+            >
+              {diet}
+            </span>
+          ))}
+        </div>
+
         {/* Image */}
         <div className="w-12 h-12 flex-shrink-0 rounded overflow-hidden bg-gray-200">
           <img

@@ -14,7 +14,6 @@ export default function IngredientSection({
 }: IngredientSectionProps) {
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeDiet, setActiveDiet] = useState<string | null>(null);
 
   const filteredIngredients = ingredients.filter((ingredient) => {
     const matchesCategory =
@@ -24,9 +23,7 @@ export default function IngredientSection({
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 
-    const matchesDiet = !activeDiet || ingredient.diets.includes(activeDiet);
-
-    return matchesCategory && matchesSearch && matchesDiet;
+    return matchesCategory && matchesSearch;
   });
 
   const diets = [
@@ -103,19 +100,9 @@ export default function IngredientSection({
       {/* DIET BUTTONS */}
       <div className="flex flex-wrap gap-3 mt-6 justify-center">
         {diets.map((diet) => (
-          <button
-            key={diet.code}
-            onClick={() => setActiveDiet(diet.code)}
-            className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium"
-          >
+          <button className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium">
             {/* CIRCLE */}
-            <span
-              className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold ${
-                activeDiet === diet.code
-                  ? "bg-[#A2D135]  text-black"
-                  : "bg-[#A2D135] text-black"
-              }`}
-            >
+            <span className="w-7 h-7 bg-[#A2D135] text-black flex items-center justify-center rounded-full text-xs font-bold ">
               {/* STYLE ONACTIVE ???*/}
               {diet.code}
             </span>
