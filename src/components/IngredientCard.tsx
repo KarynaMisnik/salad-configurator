@@ -18,7 +18,6 @@ export default function IngredientCard({ ingredient }: Props) {
         onClick={() => addIngredient(ingredient)}
         className="relative w-60 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center gap-3 p-2"
       >
-        {/* 🟢 DIET TAGS (TOP RIGHT) */}
         <div className="absolute top-1 right-1 flex gap-1">
           {ingredient.diets.map((diet) => (
             <span
@@ -31,7 +30,7 @@ export default function IngredientCard({ ingredient }: Props) {
         </div>
 
         {/* Image */}
-        <div className="w-12 h-12 flex-shrink-0 rounded overflow-hidden bg-gray-200">
+        <div className="w-12 h-12 m-0 flex-shrink-0 rounded overflow-hidden bg-gray-200">
           <img
             src={ingredient.image_url}
             alt={ingredient.name}
