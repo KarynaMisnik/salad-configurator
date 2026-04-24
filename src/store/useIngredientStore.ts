@@ -1,13 +1,16 @@
 import { create } from "zustand";
-import type { Ingredient, Bowl } from "../types";
+import type { Ingredient, Bowl, BaseIngredient } from "../types";
 
 interface IngredientStore {
   slots: Record<string, Ingredient | null>;
   baseType: number;
   selectedBowl: Bowl | null;
+  selectedBase: BaseIngredient | null;
 
   setBaseType: (id: number) => void;
   setBowl: (bowl: Bowl) => void;
+  setBase: (base: BaseIngredient) => void;
+
   clearSelection: () => void;
 
   addIngredient: (item: Ingredient) => void;
@@ -18,20 +21,24 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
   slots: {},
   baseType: 1,
   selectedBowl: null,
+  selectedBase: null,
 
   setBaseType: (id) => set({ baseType: id }),
 
   setBowl: (bowl) => set({ selectedBowl: bowl }),
 
- 
+  setBase: (base) => set({ selectedBase: base }),
+
   clearSelection: () =>
     set({
       slots: {},
       selectedBowl: null,
+      selectedBase: null,
     }),
 
   addIngredient: (item) =>
     set((state) => {
+      // base ingredient override
       if (item.categoryId === 6) {
         return {
           slots: { ...state.slots, base: item },
