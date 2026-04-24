@@ -51,3 +51,11 @@ export interface PriceListItem {
   price: number;
   type: string;
 }
+
+export interface BaseIngredient {
+  id: number;
+  categoryId: number;
+  name: string;
+  weight_grams: number;
+  image_url: string;
+}

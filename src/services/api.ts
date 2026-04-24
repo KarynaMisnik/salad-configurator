@@ -1,3 +1,5 @@
+import type { BaseIngredient } from "../types";
+
 //const BASE_URL = " localhost:3000/api/";
 export async function getBowls(typeId?: number) {
   const url = typeId
@@ -29,15 +31,16 @@ export async function getIngredients(typeId?: number){
 }
 
 
-export async function getBaseIngredients(){
-   const response = await fetch(
+export async function getBaseIngredients() {
+  const res = await fetch(
     "https://fresse-api.onrender.com/api/baseingredients",
   );
- 
-  const data = await response.json();
-  return data;
-}
+
+  const data = await res.json();
+
   
+  return data.filter((item: BaseIngredient) => item.categoryId === 6);
+}
 
 export const saveRecipe = async (
   token: string,
