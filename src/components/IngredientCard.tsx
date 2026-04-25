@@ -16,7 +16,7 @@ export default function IngredientCard({ ingredient }: Props) {
       <button
         type="button"
         onClick={() => addIngredient(ingredient)}
-        className="relative w-60 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center gap-3 p-2"
+        className="relative w-60 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center gap-3 p-2 active:scale-95 transition-transform duration-100"
       >
         <div className="absolute top-1 right-1 flex gap-1">
           {ingredient.diets.map((diet) => (
