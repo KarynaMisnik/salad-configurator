@@ -16,6 +16,13 @@ interface IngredientStore {
   addIngredient: (item: Ingredient) => void;
   removeIngredient: (id: number) => void;
   clearSlot: (slotKey: string) => void;
+
+  loadRecipe: (params: {
+    bowl: Bowl;
+    base: BaseIngredient | null;
+    slots: Record<string, Ingredient | null>;
+    baseType: number;
+  }) => void;
 }
 
 export const useIngredientStore = create<IngredientStore>((set) => ({
@@ -83,4 +90,11 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
       }
       return { slots: newSlots };
     }),
+  loadRecipe: ({ bowl, base, slots, baseType }) =>
+    set(() => ({
+      selectedBowl: bowl,
+      selectedBase: base,
+      slots,
+      baseType,
+    })),
 }));

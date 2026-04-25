@@ -1,3 +1,10 @@
+import type { Recipe } from "../types";
+
+export async function getPublicRecipes(): Promise<Recipe[]> {
+  const res = await fetch("https://fresse-api.onrender.com/api/recipes");
+  if (!res.ok) throw new Error("Failed to fetch recipes");
+  return res.json();
+}
 import type { BaseIngredient } from "../types";
 
 //const BASE_URL = " localhost:3000/api/";
