@@ -22,10 +22,13 @@ function Configurator() {
   const [isLoading, setIsLoading] = useState(false);
 
   const baseType = useIngredientStore((state) => state.baseType);
+  const selectedBowl = useIngredientStore((state) => state.selectedBowl);
+  const setBowl = useIngredientStore((state) => state.setBowl);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+
       try {
         const [b, c, i, bi] = await Promise.all([
           getBowls(baseType),
@@ -50,7 +53,6 @@ function Configurator() {
         setCategories(filteredCategories);
         setIngredients(filteredIngredients);
 
-        // IMPORTANT FIX:
         const filteredBases =
           baseType === 1
             ? bi.filter((b: BaseIngredient) => b.categoryId === 6)

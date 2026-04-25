@@ -26,6 +26,7 @@ export interface Ingredient extends BaseType {
   name: string;
   diets: string[];
   weight_grams: number;
+  wedge_image_url: string;
 }
 
 export interface User {

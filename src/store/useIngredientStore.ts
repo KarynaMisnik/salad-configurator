@@ -31,11 +31,41 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
   selectedBowl: null,
   selectedBase: null,
 
-  setBaseType: (id) => set({ baseType: id }),
+ setBaseType: (id) =>
+  set(() => ({
+    baseType: id,
+    selectedBase: null, // 🔥 reset base
+    slots: {},          // optional but recommended
+  })),
 
-  setBowl: (bowl) => set({ selectedBowl: bowl }),
+setBowl: (bowl: Bowl | null) =>
+  set(() => ({
+    selectedBowl: bowl,
+    selectedBase: null,
+    slots: {},
+  })),
 
-  setBase: (base) => set({ selectedBase: base }),
+setBase: (base: BaseIngredient) =>
+  set((state) => {
+    const allowed = state.baseType;
+
+    // if base belongs to another type → block
+    if (base.categoryId !== 6 && base.categoryId !== allowed) {
+      return state;
+    }
+
+    // optional: also block if bowl exists and mismatches
+    if (
+      state.selectedBowl &&
+      state.selectedBowl.base_type_id !== allowed
+    ) {
+      return state;
+    }
+
+    return {
+      selectedBase: base,
+    };
+  }),
 
   clearSelection: () =>
     set({
@@ -82,14 +112,13 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
       }
       return { slots: newSlots };
     }),
-  clearSlot: (slotKey) =>
-    set((state) => {
-      const newSlots = { ...state.slots };
-      if (slotKey in newSlots) {
-        newSlots[slotKey] = null;
-      }
-      return { slots: newSlots };
-    }),
+ clearSlot: (key: string) =>
+  set((state) => ({
+    slots: {
+      ...state.slots,
+      [key]: null,
+    },
+  })),
   loadRecipe: ({ bowl, base, slots, baseType }) =>
     set(() => ({
       selectedBowl: bowl,
