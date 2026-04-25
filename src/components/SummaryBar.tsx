@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
+
 import { useIngredientStore } from "../store/useIngredientStore";
 import type { Ingredient } from "../types";
 import { calculateTotalWeight } from "../utils/calculations";
 
 export default function SummaryBar() {
   const slots = useIngredientStore((state) => state.slots);
+  const clearSlot = useIngredientStore((state) => state.clearSlot);
 
-  const removeIngredient = useIngredientStore(
-    (state) => state.removeIngredient,
-  );
-  const activeIngredients = Object.values(slots).filter(
-    (i): i is Ingredient => i !== null,
-  );
+  // Only show slots that are not null and not the base slot
+  const slotEntries = Object.entries(slots).filter(
+    ([key, value]) => key !== "base" && value !== null
+  ) as [string, Ingredient][];
+
+  const activeIngredients = slotEntries.map(([_, ingredient]) => ingredient);
 
   const totalWeight = calculateTotalWeight(activeIngredients);
   const totalPrice = activeIngredients.reduce(
@@ -29,15 +31,15 @@ export default function SummaryBar() {
           Selected ingredients ({activeIngredients.length})
         </h3>
         <ul className="space-y-2 text-sm">
-          {activeIngredients.map((item) => (
+          {slotEntries.map(([slotKey, item]) => (
             <li
-              key={item.id}
+              key={slotKey}
               className="flex items-center justify-between gap-3 bg-zinc-700/70 rounded-lg px-3 py-2"
             >
               <span>{item.name}</span>
               <button
                 type="button"
-                onClick={() => removeIngredient(item.id)}
+                onClick={() => clearSlot(slotKey)}
                 aria-label={`Remove ${item.name}`}
                 className="w-5 h-5 rounded-full bg-zinc-500 hover:bg-zinc-400 text-white text-xs leading-none"
               >
