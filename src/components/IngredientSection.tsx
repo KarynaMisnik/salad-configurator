@@ -34,7 +34,7 @@ export default function IngredientSection({
   ];
 
   return (
-    <section className="bg-zinc-800 rounded-[3rem] m-4 p-8 text-white  shadow-lg">
+    <section className="bg-zinc-800 flex flex-col items-center rounded-[3rem] m-4 p-8 text-white  shadow-lg">
       <div className="flex flex-col items-center text-center mb-6 md:mb-0  ">
         <h1 className="flex items-center gap-4 text-xl font-semibold">
           <div className="bg-white text-black font-bold rounded-full w-8 h-8 flex items-center justify-center mb-4 shrink-0">
@@ -58,7 +58,7 @@ export default function IngredientSection({
         </div>
 
         {/* CATEGORY BUTTONS */}
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-6">
           {categories.map((category) => {
             const isActive = activeCategory === category.id;
             return (
@@ -67,7 +67,7 @@ export default function IngredientSection({
                 onClick={() => setActiveCategory(category.id)}
                 className={`px-6 py-2 rounded-full font-bold transition-colors duration-150 border-2 focus:outline-none focus:ring-2 focus:ring-[#A2D135] ${
                   isActive
-                    ? "bg-white text-[#A2D135] border-[#A2D135] shadow-lg scale-105" // highlighted style
+                    ? "bg-white text-black border-[#A2D135] shadow-lg scale-105" // highlighted style
                     : "bg-[#A2D135] text-black border-transparent hover:bg-white hover:text-[#A2D135] hover:border-[#A2D135]"
                 }`}
                 style={{
@@ -84,7 +84,7 @@ export default function IngredientSection({
       </div>
 
       {/* INGREDIENT CARDS */}
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 justify-center items-center">
         {filteredIngredients.length === 0 ? (
           <p className="text-gray-300">Select a category to see ingredients</p>
         ) : (
