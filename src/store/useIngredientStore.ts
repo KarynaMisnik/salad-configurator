@@ -15,6 +15,14 @@ interface IngredientStore {
 
   addIngredient: (item: Ingredient) => void;
   removeIngredient: (id: number) => void;
+  clearSlot: (slotKey: string) => void;
+
+  loadRecipe: (params: {
+    bowl: Bowl;
+    base: BaseIngredient | null;
+    slots: Record<string, Ingredient | null>;
+    baseType: number;
+  }) => void;
 }
 
 export const useIngredientStore = create<IngredientStore>((set) => ({
@@ -66,15 +74,27 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
   removeIngredient: (id) =>
     set((state) => {
       const newSlots = { ...state.slots };
-
       const keyToRemove = Object.keys(newSlots).find(
         (key) => newSlots[key]?.id === id,
       );
-
       if (keyToRemove) {
         newSlots[keyToRemove] = null;
       }
-
       return { slots: newSlots };
     }),
+  clearSlot: (slotKey) =>
+    set((state) => {
+      const newSlots = { ...state.slots };
+      if (slotKey in newSlots) {
+        newSlots[slotKey] = null;
+      }
+      return { slots: newSlots };
+    }),
+  loadRecipe: ({ bowl, base, slots, baseType }) =>
+    set(() => ({
+      selectedBowl: bowl,
+      selectedBase: base,
+      slots,
+      baseType,
+    })),
 }));

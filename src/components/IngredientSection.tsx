@@ -59,19 +59,23 @@ export default function IngredientSection({
 
         {/* CATEGORY BUTTONS */}
         <div className="flex flex-wrap gap-3 mb-6">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-2 rounded-full font-bold ${
-                activeCategory === category.id
-                  ? "bg-white text-black"
-                  : "bg-[#A2D135] text-black"
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
+          {categories.map((category) => {
+            const isActive = activeCategory === category.id;
+            return (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`px-6 py-2 rounded-full font-bold transition-colors duration-150 border-2 focus:outline-none focus:ring-2 focus:ring-[#A2D135] ${
+                  isActive
+                    ? 'bg-white text-[#A2D135] border-[#A2D135] shadow-lg scale-105' // highlighted style
+                    : 'bg-[#A2D135] text-black border-transparent hover:bg-white hover:text-[#A2D135] hover:border-[#A2D135]'
+                }`}
+                style={{ boxShadow: isActive ? '0 4px 16px 0 rgba(162, 209, 53, 0.15)' : undefined }}
+              >
+                {category.name}
+              </button>
+            );
+          })}
         </div>
       </div>
 
