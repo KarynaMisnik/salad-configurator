@@ -19,11 +19,13 @@ function Configurator() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [baseIngredients, setBaseIngredients] = useState<BaseIngredient[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const baseType = useIngredientStore((state) => state.baseType);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const [b, c, i, bi] = await Promise.all([
           getBowls(baseType),
@@ -57,11 +59,22 @@ function Configurator() {
         setBaseIngredients(filteredBases);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [baseType]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#A2D135] mb-4"></div>
+        <span className="text-lg text-white">Ladataan...</span>
+      </div>
+    );
+  }
 
   return (
     <>
