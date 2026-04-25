@@ -1,10 +1,13 @@
 import { useIngredientStore } from "../store/useIngredientStore";
+import { useLocation } from "react-router-dom";
+
 
 export default function CenterBowl() {
   const setBaseType = useIngredientStore((state) => state.setBaseType);
   const slots = useIngredientStore((state) => state.slots);
   const selectedBowl = useIngredientStore((state) => state.selectedBowl);
   const baseType = useIngredientStore((state) => state.baseType);
+  const location = useLocation();
 
   const base = slots.base;
 
@@ -21,22 +24,24 @@ export default function CenterBowl() {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center min-h-[400px] mt-4 lg:mt-0">
-      {/* SWITCH */}
-      <div className="flex gap-3 mb-6 items-center">
-        <button
-          onClick={() => setBaseType(1)}
-          className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-3 hover:border-solid hover:border-green-700 transition"
-        >
-          Salaatti
-        </button>
+      {/* SWITCH: Only show on non-print pages */}
+      {location.pathname !== "/print" && (
+        <div className="flex gap-3 mb-6 items-center">
+          <button
+            onClick={() => setBaseType(1)}
+            className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-3 hover:border-solid hover:border-green-700 transition"
+          >
+            Salaatti
+          </button>
 
-        <button
-          onClick={() => setBaseType(2)}
-          className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-3 hover:border-solid hover:border-green-700 transition"
-        >
-          Rahka
-        </button>
-      </div>
+          <button
+            onClick={() => setBaseType(2)}
+            className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-3 hover:border-solid hover:border-green-700 transition"
+          >
+            Rahka
+          </button>
+        </div>
+      )}
 
       {/* BOWL */}
       <div className="relative w-80 h-80  overflow-hidden flex items-center justify-center">
