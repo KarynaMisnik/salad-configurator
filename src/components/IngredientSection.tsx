@@ -68,7 +68,7 @@ export default function IngredientSection({
                 className={`px-6 py-2 rounded-full font-bold transition-colors duration-150 border-2 focus:outline-none focus:ring-2 focus:ring-[#A2D135] ${
                   isActive
                     ? "bg-white text-black border-[#A2D135] shadow-lg scale-105" // highlighted style
-                    : "bg-[#A2D135] text-black border-transparent hover:bg-white hover:text-[#A2D135] hover:border-[#A2D135]"
+                    : "bg-[#A2D135] text-black border-transparent hover:bg-white hover:text-black hover:border-[#A2D135]"
                 }`}
                 style={{
                   boxShadow: isActive

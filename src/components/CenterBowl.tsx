@@ -28,7 +28,7 @@ export default function CenterBowl() {
     <div className="flex-1 flex flex-col items-center justify-center min-h-[400px] mt-4 lg:mt-0">
       {/* SWITCH */}
       {location.pathname !== "/print" && (
-        <div className="flex gap-3 mb-6 items-center">
+        <div className="flex gap-3 mb-6 mt-4 items-center">
           <button
             onClick={() => setBaseType(1)}
             className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-green-900 transition"

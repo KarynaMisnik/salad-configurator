@@ -1,5 +1,6 @@
 import type { Bowl } from "../types/index";
 import { useIngredientStore } from "../store/useIngredientStore.ts";
+import { useEffect, useRef } from "react";
 
 type Props = {
   bowls: Bowl[];
@@ -9,9 +10,29 @@ export default function BowlSelection({ bowls }: Props) {
   const setBowl = useIngredientStore((state) => state.setBowl);
   const selectedBowl = useIngredientStore((state) => state.selectedBowl);
   const baseType = useIngredientStore((state) => state.baseType);
+  const highlightStep = useIngredientStore((state) => state.highlightStep);
+  const setHighlightStep = useIngredientStore(
+    (state) => state.setHighlightStep,
+  );
+
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (highlightStep === 1 && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      setTimeout(() => setHighlightStep(null), 1500);
+    }
+  }, [highlightStep]);
 
   return (
-    <aside className="bg-zinc-800 rounded-[3rem] p-6 text-white  lg:w-1/4 m-4 flex flex-col items-center shadow-lg">
+    <aside
+      ref={ref}
+      className={`
+    bg-zinc-800 rounded-[3rem] p-6 text-white lg:w-1/4 m-4 flex flex-col items-center shadow-lg
+    ${highlightStep === 1 ? "ring-3 ring-[#A2D135] animate-pulse" : ""}
+  `}
+    >
       <div className="bg-white text-black font-bold rounded-full w-8 h-8 flex items-center justify-center mb-4 shrink-0">
         1.
       </div>
