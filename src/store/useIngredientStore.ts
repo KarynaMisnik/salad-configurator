@@ -7,6 +7,9 @@ interface IngredientStore {
   selectedBowl: Bowl | null;
   selectedBase: BaseIngredient | null;
 
+  highlightStep: number | null;
+setHighlightStep: (step: number | null) => void;
+
   setBaseType: (id: number) => void;
   setBowl: (bowl: Bowl) => void;
   setBase: (base: BaseIngredient) => void;
@@ -16,6 +19,8 @@ interface IngredientStore {
   addIngredient: (item: Ingredient) => void;
   removeIngredient: (id: number) => void;
   clearSlot: (slotKey: string) => void;
+
+  
 
   loadRecipe: (params: {
     bowl: Bowl;
@@ -31,94 +36,117 @@ export const useIngredientStore = create<IngredientStore>((set) => ({
   selectedBowl: null,
   selectedBase: null,
 
- setBaseType: (id) =>
-  set(() => ({
-    baseType: id,
-    selectedBase: null, // 🔥 reset base
-    slots: {},          // optional but recommended
-  })),
+ 
+  highlightStep: null,
 
-setBowl: (bowl: Bowl | null) =>
-  set(() => ({
-    selectedBowl: bowl,
-    selectedBase: null,
-    slots: {},
-  })),
+  setHighlightStep: (step) =>
+    set(() => ({
+      highlightStep: step,
+    })),
 
-setBase: (base: BaseIngredient) =>
-  set((state) => {
-    const allowed = state.baseType;
+  setBaseType: (id) =>
+    set(() => ({
+      baseType: id,
+      selectedBase: null,
+      slots: {},
+    })),
 
-    // if base belongs to another type → block
-    if (base.categoryId !== 6 && base.categoryId !== allowed) {
-      return state;
-    }
+  setBowl: (bowl: Bowl | null) =>
+    set(() => ({
+      selectedBowl: bowl,
+      selectedBase: null,
+      slots: {},
+    })),
 
-    // optional: also block if bowl exists and mismatches
-    if (
-      state.selectedBowl &&
-      state.selectedBowl.base_type_id !== allowed
-    ) {
-      return state;
-    }
+  setBase: (base: BaseIngredient) =>
+    set((state) => {
+      const allowed = state.baseType;
 
-    return {
-      selectedBase: base,
-    };
-  }),
+      if (!state.selectedBowl) {
+        return {
+          highlightStep: 1,
+        };
+      }
+
+      if (base.categoryId !== 6 && base.categoryId !== allowed) {
+        return state;
+      }
+
+      if (
+        state.selectedBowl &&
+        state.selectedBowl.base_type_id !== allowed
+      ) {
+        return state;
+      }
+
+      return {
+        selectedBase: base,
+        highlightStep: null,
+      };
+    }),
 
   clearSelection: () =>
     set({
       slots: {},
       selectedBowl: null,
       selectedBase: null,
+      highlightStep: null,
     }),
 
-  addIngredient: (item) =>
-    set((state) => {
-      // base ingredient override
-      if (item.categoryId === 6) {
+addIngredient: (item) =>
+  set((state) => {
+    if (!state.selectedBowl) {
+      return { highlightStep: 1 };
+    }
+
+    const requiresBase = state.selectedBowl.base_type_id === 1;
+
+    
+    if (requiresBase && !state.selectedBase) {
+      return { highlightStep: 2 };
+    }
+
+    const slotCount = state.selectedBowl.slot_count;
+    if (!slotCount) return state;
+
+    for (let i = 1; i <= slotCount; i++) {
+      const key = `slot-${i}`;
+      if (!state.slots[key]) {
         return {
-          slots: { ...state.slots, base: item },
+          slots: {
+            ...state.slots,
+            [key]: item,
+          },
         };
       }
+    }
 
-      const slotCount = state.selectedBowl?.slot_count;
-      if (!slotCount) return state;
-
-      for (let i = 1; i <= slotCount; i++) {
-        const key = `slot-${i}`;
-        if (!state.slots[key]) {
-          return {
-            slots: {
-              ...state.slots,
-              [key]: item,
-            },
-          };
-        }
-      }
-
-      return state;
-    }),
+    return state;
+  }),
 
   removeIngredient: (id) =>
     set((state) => {
       const newSlots = { ...state.slots };
+
       const keyToRemove = Object.keys(newSlots).find(
         (key) => newSlots[key]?.id === id,
       );
+
       if (keyToRemove) {
         newSlots[keyToRemove] = null;
       }
+
       return { slots: newSlots };
     }),
- clearSlot: (key: string) =>
-  set((state) => ({
-    slots: {
-      ...state.slots,
-      [key]: null,
-    },
-  })),
+
+  clearSlot: (key: string) =>
+    set((state) => ({
+      slots: {
+        ...state.slots,
+        [key]: null,
+      },
+    })),
+
   loadRecipe: ({ bowl, base, slots, baseType }) =>
     set(() => ({
       selectedBowl: bowl,
