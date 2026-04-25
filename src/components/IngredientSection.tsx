@@ -37,9 +37,9 @@ export default function IngredientSection({
     <section className="bg-zinc-800 rounded-[3rem] m-4 p-8 text-white  shadow-lg">
       <div className="flex flex-col items-center text-center mb-6 md:mb-0  ">
         <h1 className="flex items-center gap-4 text-xl font-semibold">
-          <span className="w-10 h-10 flex items-center justify-center bg-white rounded-full text-black font-bold">
+          <div className="bg-white text-black font-bold rounded-full w-8 h-8 flex items-center justify-center mb-4 shrink-0">
             3.
-          </span>
+          </div>
           Lisää raaka-aineet
         </h1>
       </div>
@@ -67,10 +67,14 @@ export default function IngredientSection({
                 onClick={() => setActiveCategory(category.id)}
                 className={`px-6 py-2 rounded-full font-bold transition-colors duration-150 border-2 focus:outline-none focus:ring-2 focus:ring-[#A2D135] ${
                   isActive
-                    ? 'bg-white text-[#A2D135] border-[#A2D135] shadow-lg scale-105' // highlighted style
-                    : 'bg-[#A2D135] text-black border-transparent hover:bg-white hover:text-[#A2D135] hover:border-[#A2D135]'
+                    ? "bg-white text-[#A2D135] border-[#A2D135] shadow-lg scale-105" // highlighted style
+                    : "bg-[#A2D135] text-black border-transparent hover:bg-white hover:text-[#A2D135] hover:border-[#A2D135]"
                 }`}
-                style={{ boxShadow: isActive ? '0 4px 16px 0 rgba(162, 209, 53, 0.15)' : undefined }}
+                style={{
+                  boxShadow: isActive
+                    ? "0 4px 16px 0 rgba(162, 209, 53, 0.15)"
+                    : undefined,
+                }}
               >
                 {category.name}
               </button>

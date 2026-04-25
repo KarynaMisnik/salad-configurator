@@ -1,19 +1,21 @@
 import { useIngredientStore } from "../store/useIngredientStore";
 import { useLocation } from "react-router-dom";
 
-
 export default function CenterBowl() {
   const setBaseType = useIngredientStore((state) => state.setBaseType);
   const slots = useIngredientStore((state) => state.slots);
   const selectedBowl = useIngredientStore((state) => state.selectedBowl);
-  const baseType = useIngredientStore((state) => state.baseType);
+  const selectedBase = useIngredientStore((state) => state.selectedBase);
+  const clearSlot = useIngredientStore((state) => state.clearSlot);
+
   const location = useLocation();
 
-  const base = slots.base;
+  const slotCount = selectedBowl?.slot_count ?? 0;
 
-  const activeIngredients = Object.entries(slots)
-    .filter(([key, value]) => key !== "base" && value !== null)
-    .map(([_, value]) => value);
+  const slotsArray = Array.from({ length: slotCount }, (_, i) => {
+    const key = `slot-${i + 1}`;
+    return { key, item: slots[key] };
+  });
 
   const dividerImage =
     selectedBowl?.slot_count === 6
@@ -24,19 +26,19 @@ export default function CenterBowl() {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center min-h-[400px] mt-4 lg:mt-0">
-      {/* SWITCH: Only show on non-print pages */}
+      {/* SWITCH */}
       {location.pathname !== "/print" && (
         <div className="flex gap-3 mb-6 items-center">
           <button
             onClick={() => setBaseType(1)}
-            className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-3 hover:border-solid hover:border-green-700 transition"
+            className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-green-900 transition"
           >
             Salaatti
           </button>
 
           <button
             onClick={() => setBaseType(2)}
-            className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-3 hover:border-solid hover:border-green-700 transition"
+            className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-green-900 transition"
           >
             Rahka
           </button>
@@ -44,8 +46,8 @@ export default function CenterBowl() {
       )}
 
       {/* BOWL */}
-      <div className="relative w-80 h-80  overflow-hidden flex items-center justify-center">
-        {/* 1. BOWL IMAGE (main layer) */}
+      <div className="relative w-80 h-80 rounded-full overflow-hidden flex items-center justify-center">
+        {/* BOWL IMAGE */}
         {selectedBowl ? (
           <img
             src={selectedBowl.image_url}
@@ -56,17 +58,17 @@ export default function CenterBowl() {
           <span className="text-gray-400 z-10">Valitse rasia</span>
         )}
 
-        {/* 2. BASE */}
-        {base && (
+        {/* BASE */}
+        {selectedBase && (
           <img
-            src={base.image_url}
-            alt="base"
+            src={selectedBase.image_url}
+            alt={selectedBase.name}
             className="absolute inset-0 w-full h-full object-cover z-10"
           />
         )}
 
-        {/* 3. DIVIDER */}
-        {selectedBowl && dividerImage && (
+        {/* DIVIDER */}
+        {dividerImage && (
           <img
             src={dividerImage}
             alt="divider"
@@ -74,21 +76,45 @@ export default function CenterBowl() {
           />
         )}
 
-        {/* 4. INGREDIENTS */}
-        <div className="relative z-30 flex flex-wrap items-center justify-center gap-2 p-4 h-full">
-          {activeIngredients.length > 0 &&
-            activeIngredients.map((ingredient) => {
-              if (!ingredient) return null;
+        {/* INGREDIENT SLOTS (WEDGES) */}
+        <div className="absolute inset-0 z-30">
+          {slotsArray.map(({ key, item }, index) => {
+            if (!item) return null;
 
-              return (
-                <span
-                  key={ingredient.id}
-                  className="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm"
+            const angleStep = 360 / slotCount;
+            const rotation = index * angleStep;
+
+            return (
+              <div
+                key={key}
+                className="absolute w-full h-full flex items-center justify-center pointer-events-none"
+                style={{
+                  transform: `rotate(${rotation}deg)`,
+                }}
+              >
+                {/* slice content */}
+                <div
+                  className="relative w-2/5 h-1/2 flex items-center justify-center pointer-events-auto"
+                  style={{
+                    transform: `translateY(-40%)`,
+                  }}
                 >
-                  {ingredient.name}
-                </span>
-              );
-            })}
+                  <img
+                    src={item.wedge_image_url}
+                    alt={item.name}
+                    className="w-full h-full object-contain"
+                  />
+
+                  <button
+                    onClick={() => clearSlot(key)}
+                    className="absolute top-1 right-1 bg-black text-white rounded-full w-6 h-6 text-xs z-50"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

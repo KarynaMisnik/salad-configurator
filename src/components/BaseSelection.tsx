@@ -8,8 +8,14 @@ interface BaseSelectionProps {
 export default function BaseSelection({ ingredients }: BaseSelectionProps) {
   const selectedBase = useIngredientStore((state) => state.selectedBase);
   const setBase = useIngredientStore((state) => state.setBase);
+
+  const selectedBowl = useIngredientStore((state) => state.selectedBowl);
+  const baseType = useIngredientStore((state) => state.baseType);
+
+  const isDisabled = selectedBowl && selectedBowl.base_type_id !== baseType;
+
   return (
-    <aside className="bg-zinc-800 rounded-[3rem] p-6 text-white  lg:w-1/4 m-4 flex flex-col items-center shadow-lg">
+    <aside className="bg-zinc-800 rounded-[3rem] p-6 text-white lg:w-1/4 m-4 flex flex-col items-center shadow-lg">
       <div className="bg-white text-black font-bold rounded-full w-8 h-8 flex items-center justify-center mb-4 shrink-0">
         2.
       </div>
@@ -25,19 +31,32 @@ export default function BaseSelection({ ingredients }: BaseSelectionProps) {
         <div className="w-full space-y-4">
           {ingredients.map((base) => {
             const isActive = selectedBase && selectedBase.id === base.id;
+
+            const disabled = isDisabled && base.categoryId === 6;
+
             return (
               <div
                 key={base.id}
-                className={`pb-2 flex items-center justify-between gap-4 ${isActive ? 'border-2 border-[#A2D135] bg-green-900/30 rounded-xl' : ''}`}
+                className={`pb-2 flex items-center justify-between gap-4 transition ${
+                  disabled ? "opacity-40 pointer-events-none" : ""
+                }`}
               >
-                <span className={`text-white cursor-pointer ${isActive ? 'text-[#A2D135] font-bold' : ''}`}
+                {/* TEXT */}
+                <span
                   onClick={() => setBase(base)}
+                  className={`cursor-pointer ${
+                    isActive ? "text-[#A2D135] font-bold" : "text-white"
+                  }`}
                 >
                   {base.name}
                 </span>
 
-                <div className={`w-10 h-10 rounded-full overflow-hidden bg-gray-300 flex-shrink-0 border-2 ${isActive ? 'border-[#A2D135]' : 'border-transparent'}`}
+                {/* IMAGE */}
+                <div
                   onClick={() => setBase(base)}
+                  className={`w-10 h-10 rounded-full overflow-hidden bg-gray-300 flex-shrink-0 border-2 cursor-pointer ${
+                    isActive ? "border-[#A2D135]" : "border-transparent"
+                  }`}
                 >
                   <img
                     src={base.image_url}
