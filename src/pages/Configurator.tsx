@@ -43,6 +43,7 @@ function Configurator() {
   const baseType = useIngredientStore((state) => state.baseType);
   const saveRecipe = useIngredientStore((state) => state.saveRecipe);
   const loadRecipe = useIngredientStore((state) => state.loadRecipe);
+  const clearSelection = useIngredientStore((s) => s.clearSelection);
 
   // Fetch prices when token is present
   const token = useAuthStore((state) => state.token);
@@ -109,6 +110,7 @@ function Configurator() {
     }
 
     await saveRecipe(name, token, isPublic);
+    clearSelection();
   };
 
   // ---------------------------  LOAD RECIPE (from community) --------------------------- //

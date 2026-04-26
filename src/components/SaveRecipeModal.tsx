@@ -11,20 +11,25 @@ export default function SaveRecipeModal({ isOpen, onClose, onSave }: Props) {
   const [name, setName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    onSave({
-      name,
-      isPublic,
-    });
+    try {
+      await onSave({
+        name,
+        isPublic,
+      });
 
-    setName("");
-    setIsPublic(false);
-    onClose();
+      alert("Recipe saved successfully!");
+
+      setName("");
+      setIsPublic(false);
+      onClose();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to save recipe");
+    }
   };
-
-  if (!isOpen) return null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
