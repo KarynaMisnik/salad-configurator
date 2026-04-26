@@ -43,7 +43,6 @@ function Configurator() {
   const baseType = useIngredientStore((state) => state.baseType);
   const saveRecipe = useIngredientStore((state) => state.saveRecipe);
   const loadRecipe = useIngredientStore((state) => state.loadRecipe);
-  const token = useAuthStore((state) => state.token);
 
   // Fetch prices when token is present
   const token = useAuthStore((state) => state.token);
