@@ -12,7 +12,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9999]"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
