@@ -13,6 +13,8 @@ import {
   getBaseIngredients,
 } from "../services/api";
 import { useIngredientStore } from "../store/useIngredientStore";
+import { useAuthStore } from "../store/useAuthStore";
+import { usePriceStore } from "../store/usePriceStore";
 
 function Configurator() {
   const [bowls, setBowls] = useState<Bowl[]>([]);
@@ -24,6 +26,15 @@ function Configurator() {
   const baseType = useIngredientStore((state) => state.baseType);
   const selectedBowl = useIngredientStore((state) => state.selectedBowl);
   const setBowl = useIngredientStore((state) => state.setBowl);
+
+  // Fetch prices when token is present
+  const token = useAuthStore((state) => state.token);
+  const fetchPrices = usePriceStore((state) => state.fetchPrices);
+  useEffect(() => {
+    if (token) {
+      fetchPrices(token);
+    }
+  }, [token, fetchPrices]);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,3 +1,14 @@
+import type { PriceListItem } from "../types";
+// Fetch customer-specific price list with JWT token
+export async function getPrices(token: string): Promise<PriceListItem[]> {
+  const res = await fetch("https://fresse-api.onrender.com/api/prices", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch prices");
+  return res.json();
+}
 import type { Recipe } from "../types";
 
 export async function getPublicRecipes(): Promise<Recipe[]> {
