@@ -21,27 +21,26 @@ export function Header() {
 
   return (
     <>
-      <header className="bg-zinc-800 text-white w-full h-32 flex justify-between items-start px-8 pt-4">
+      <header className="bg-zinc-800 text-white w-full h-32 grid grid-cols-3 items-center px-8">
         <Link
           to="/"
-          className="w-24 h-24  flex items-center justify-center mt-2  "
+          className="w-24 h-24  flex items-center flex justify-start mt-2"
         >
           <img
             src={logo}
             alt="Fresse logo"
-            className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-30 lg:h-30 object-contain"
+            className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 object-contain"
           />
         </Link>
-
-        <h1 className="text-3xl font-black tracking-widest mt-6">BOWL-LASKURI</h1>
-
+        <h1 className="flex justify-center text-3xl font-black tracking-widest mt-6  ml-4 sm:ml-0">
+          BOWL-LASKURI
+        </h1>
         <button
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="text-3xl font-bold"
+          className="flex justify-end text-3xl font-bold"
         >
           <Bars3Icon className="w-6 h-6" />
         </button>
-
         {isMenuOpen && (
           <div
             className={`
