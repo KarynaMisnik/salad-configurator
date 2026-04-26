@@ -1,5 +1,6 @@
 import { useIngredientStore } from "../store/useIngredientStore";
 import { useLocation } from "react-router-dom";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 export default function CenterBowl() {
   const setBaseType = useIngredientStore((state) => state.setBaseType);
@@ -107,9 +108,9 @@ export default function CenterBowl() {
 
                   <button
                     onClick={() => clearSlot(key)}
-                    className="absolute top-1 right-1 bg-black text-white rounded-full w-6 h-6 text-xs z-50"
+                    className="absolute top-1 right-1 bg-black text-white rounded-full w-6 h-6 text-xs z-50 hover:bg-red-400"
                   >
-                    ✕
+                    <XMarkIcon className="w-6 h-6" />
                   </button>
                 </div>
               </div>

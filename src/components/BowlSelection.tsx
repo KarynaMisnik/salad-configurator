@@ -52,15 +52,15 @@ export default function BowlSelection({ bowls }: Props) {
               <button
                 disabled={isDisabled}
                 onClick={() => setBowl(bowl)}
-                className={`h-14 rounded-xl flex items-center m-3 px-4 border-2 transition
-    ${
-      isDisabled
-        ? "opacity-40 cursor-not-allowed border-gray-500"
-        : isActive
-          ? "border-2 text-[#A2D135] font-bold"
-          : "border-none hover:border-[#A2D135]"
-    }
-  `}
+                className={`h-12 sm:h-14 md:h-16 rounded-xl flex items-center m-2 sm:m-3 px-3 sm:px-4 border-2 transition
+  ${
+    isDisabled
+      ? "opacity-40 cursor-not-allowed border-gray-500"
+      : isActive
+        ? "border-[#A2D135] text-[#A2D135] font-bold"
+        : "border-transparent hover:border-[#A2D135]"
+  }
+`}
               >
                 {bowl.name}
               </button>

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 type ModalProps = {
   isOpen: boolean;
@@ -17,7 +18,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
       aria-modal="true"
     >
       <div
-        className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
+        className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl m-4 border-2 border-[#A2D135]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -26,7 +27,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
           className="absolute right-3 top-3 text-sm leading-none text-zinc-600 hover:text-zinc-900"
           aria-label="Close modal"
         >
-          X
+          <XMarkIcon className="w-6 h-6" />
         </button>
         {children}
       </div>

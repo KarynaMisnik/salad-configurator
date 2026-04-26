@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useIngredientStore } from "../store/useIngredientStore";
 import type { Ingredient } from "../types";
 import { calculateTotalWeight } from "../utils/calculations";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 export default function SummaryBar() {
   const slots = useIngredientStore((state) => state.slots);
@@ -10,7 +11,7 @@ export default function SummaryBar() {
 
   // Only show slots that are not null and not the base slot
   const slotEntries = Object.entries(slots).filter(
-    ([key, value]) => key !== "base" && value !== null
+    ([key, value]) => key !== "base" && value !== null,
   ) as [string, Ingredient][];
 
   const activeIngredients = slotEntries.map(([_, ingredient]) => ingredient);
@@ -41,9 +42,9 @@ export default function SummaryBar() {
                 type="button"
                 onClick={() => clearSlot(slotKey)}
                 aria-label={`Remove ${item.name}`}
-                className="w-5 h-5 rounded-full bg-zinc-500 hover:bg-zinc-400 text-white text-xs leading-none"
+                className="w-6 h-6 rounded-full bg-zinc-500 hover:bg-red-400 text-white text-xs leading-none"
               >
-                x
+                <XMarkIcon className="w-6 h-6" />
               </button>
             </li>
           ))}
