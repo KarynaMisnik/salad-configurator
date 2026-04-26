@@ -106,3 +106,23 @@ export const login = async (email: string, password: string) => {
 
   return await response.json();
 };
+
+// EXPORT SAVED RECIPIES
+export const getRecipes = async (token: string) => {
+  const response = await fetch(
+    "https://fresse-api.onrender.com/api/recipes",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch recipes");
+  }
+
+  return await response.json();
+};

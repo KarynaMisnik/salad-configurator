@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import type { Ingredient, Bowl, BaseIngredient } from "../types";
+import { saveRecipe as saveRecipeApi } from "../services/api";
 
 interface IngredientStore {
+  
   slots: Record<string, Ingredient | null>;
   baseType: number;
   selectedBowl: Bowl | null;
@@ -28,9 +30,13 @@ setHighlightStep: (step: number | null) => void;
     slots: Record<string, Ingredient | null>;
     baseType: number;
   }) => void;
+
+ saveRecipe: (name: string, token: string, isPublic: boolean) => Promise<any>;
 }
 
-export const useIngredientStore = create<IngredientStore>((set) => ({
+
+
+export const useIngredientStore = create<IngredientStore>((set, get) => ({
   slots: {},
   baseType: 1,
   selectedBowl: null,
@@ -147,11 +153,31 @@ addIngredient: (item) =>
       },
     })),
 
-  loadRecipe: ({ bowl, base, slots, baseType }) =>
-    set(() => ({
-      selectedBowl: bowl,
-      selectedBase: base,
-      slots,
-      baseType,
-    })),
+saveRecipe: async (name: string, token: string, isPublic: boolean) => {
+  const state = get();
+
+  if (!state.selectedBowl) return;
+
+  const payload = {
+    name,
+    is_public: isPublic,
+    bowlId: String(state.selectedBowl.id),
+    ingredientIds: Object.values(state.slots)
+      .filter(Boolean)
+      .map((i: any) => i.id),
+  };
+
+  return await saveRecipeApi(token, payload);
+},
+
+loadRecipe: ({ bowl, base, slots, baseType }) =>
+  set(() => ({
+    selectedBowl: bowl,
+    selectedBase: base,
+    slots,
+    baseType,
+    highlightStep: null,
+  })),
+
+
 }));

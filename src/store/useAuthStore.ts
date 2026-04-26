@@ -8,7 +8,7 @@ interface AuthStore {
   logout: () => void;
 }
 
-// 🔹 Helper: read from localStorage safely
+// read from localStorage 
 const getInitialAuth = () => {
   return {
     token: localStorage.getItem("token"),

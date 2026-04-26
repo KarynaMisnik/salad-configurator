@@ -58,7 +58,7 @@ export function Header() {
               <UserIcon className="w-6 h-6 mr-2" />
               {userName ? (
                 <div className="flex items-center gap-4">
-                  <span>Hello, {userName}</span>
+                  <span>Moi, {userName}</span>
                   <button
                     onClick={logout}
                     className="bg-red-500 px-3 py-1 rounded"
@@ -77,14 +77,14 @@ export function Header() {
               className="font-semibold hover:text-zinc-700 transition-colors flex"
             >
               <BookmarkIcon className="w-6 h-6 mr-2" />
-              Saved recipes
+              Tallennetut reseptit
             </Link>
             <Link
               to="/print"
               className="font-semibold hover:text-zinc-700 transition-colors flex"
             >
               <PrinterIcon className="w-6 h-6 mr-2" />
-              Print
+              Tulostaa
             </Link>
           </div>
         )}

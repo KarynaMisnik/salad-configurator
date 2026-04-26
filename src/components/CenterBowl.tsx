@@ -1,8 +1,13 @@
 import { useIngredientStore } from "../store/useIngredientStore";
 import { useLocation } from "react-router-dom";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon, InboxArrowDownIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
-export default function CenterBowl() {
+type Props = {
+  onSaveClick: () => void;
+};
+
+export default function CenterBowl({ onSaveClick }: Props) {
   const setBaseType = useIngredientStore((state) => state.setBaseType);
   const slots = useIngredientStore((state) => state.slots);
   const selectedBowl = useIngredientStore((state) => state.selectedBowl);
@@ -42,6 +47,9 @@ export default function CenterBowl() {
             className="px-6 py-2 rounded-full bg-[#A2D135] text-black border border-green-700 hover:border-green-900 transition"
           >
             Rahka
+          </button>
+          <button type="button" onClick={onSaveClick}>
+            <InboxArrowDownIcon className="w-6 h-6" />
           </button>
         </div>
       )}

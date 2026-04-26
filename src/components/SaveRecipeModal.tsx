@@ -19,7 +19,6 @@ export default function SaveRecipeModal({ isOpen, onClose, onSave }: Props) {
       isPublic,
     });
 
-    // reset + close
     setName("");
     setIsPublic(false);
     onClose();
@@ -32,7 +31,6 @@ export default function SaveRecipeModal({ isOpen, onClose, onSave }: Props) {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <h2 className="text-xl font-bold">Save Recipe</h2>
 
-        {/* Recipe Name */}
         <input
           type="text"
           placeholder="Recipe name"
@@ -42,7 +40,6 @@ export default function SaveRecipeModal({ isOpen, onClose, onSave }: Props) {
           required
         />
 
-        {/* Make Public */}
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -52,7 +49,6 @@ export default function SaveRecipeModal({ isOpen, onClose, onSave }: Props) {
           Make Public
         </label>
 
-        {/* Actions */}
         <div className="flex justify-end gap-2">
           <button
             type="button"
