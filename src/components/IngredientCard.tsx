@@ -1,5 +1,7 @@
 import type { Ingredient } from "../types";
 import { useIngredientStore } from "../store/useIngredientStore";
+import { useAuthStore } from "../store/useAuthStore";
+import { usePriceStore } from "../store/usePriceStore";
 
 interface Props {
   ingredient: Ingredient;
@@ -7,9 +9,11 @@ interface Props {
 
 export default function IngredientCard({ ingredient }: Props) {
   const addIngredient = useIngredientStore(
-    (state: ReturnType<typeof useIngredientStore.getState>) =>
-      state.addIngredient,
+    (state: ReturnType<typeof useIngredientStore.getState>) => state.addIngredient
   );
+  const { token } = useAuthStore();
+  const prices = usePriceStore((state) => state.prices);
+  const priceItem = prices.find((p) => p.item_id === ingredient.id);
 
   return (
     <div className="flex justify-center">
@@ -42,6 +46,14 @@ export default function IngredientCard({ ingredient }: Props) {
         <h3 className="text-sm font-semibold text-gray-800 leading-tight break-words flex-1">
           {ingredient.name}
         </h3>
+        {/* Price */}
+        <div className="ml-auto text-xs font-semibold text-gray-600">
+          {token
+            ? priceItem
+              ? `+ ${priceItem.price.toFixed(2)} €`
+              : ""
+            : "Login to see price"}
+        </div>
       </button>
     </div>
   );

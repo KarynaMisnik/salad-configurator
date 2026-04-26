@@ -25,6 +25,7 @@ import {
 
 import { useIngredientStore } from "../store/useIngredientStore";
 import { useAuthStore } from "../store/useAuthStore";
+import { usePriceStore } from "../store/usePriceStore";
 
 function Configurator() {
   // --------------------------- STATE --------------------------- //
@@ -44,7 +45,15 @@ function Configurator() {
   const loadRecipe = useIngredientStore((state) => state.loadRecipe);
   const token = useAuthStore((state) => state.token);
 
-  // ---------------------------FETCH DATA ------------------//
+  // Fetch prices when token is present
+  const token = useAuthStore((state) => state.token);
+  const fetchPrices = usePriceStore((state) => state.fetchPrices);
+  useEffect(() => {
+    if (token) {
+      fetchPrices(token);
+    }
+  }, [token, fetchPrices]);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
